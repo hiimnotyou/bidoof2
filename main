@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    #header {
+      background-color: #333;
+      padding: 10px;
+      text-align: center;
+    }
+
+    #search-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 70%;
+      margin: 0 auto;
+    }
+
+    #search-input {
+      width: 80%;
+      padding: 5px;
+      margin-right: 10px;
+    }
+
+    #search-btn {
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+
+    #navigation-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    button {
+      margin-right: 5px;
+    }
+
+    #iframeContainer {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 50px);
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <div id="search-bar">
+      <input type="text" id="search-input" placeholder="Enter URL">
+      <button id="search-btn"><i class="fas fa-search"></i></button>
+      <div id="navigation-buttons">
+        <button onclick="goBack()">&#9666;</button>
+        <button onclick="goForward()">&#9656;</button>
+        <button onclick="refreshPage()">&#8635;</button>
+      </div>
+    </div>
+  </div>
+  <div id="iframeContainer" class="hidden">
+    <iframe src="https://2.bidoof.app/browser"></iframe>
+  </div>
+  <script>
+    const iframeContainer = document.getElementById('iframeContainer');
+    const searchInput = document.getElementById('search-input');
+
+    function goBack() {
+      if (iframeContainer.querySelector('iframe').contentWindow.history.length > 1) {
+        iframeContainer.querySelector('iframe').contentWindow.history.back();
+      }
+    }
+
+    function goForward() {
+      iframeContainer.querySelector('iframe').contentWindow.history.forward();
+    }
+
+    function refreshPage() {
+      iframeContainer.querySelector('iframe').contentWindow.location.reload();
+    }
+
+    document.getElementById('search-btn').addEventListener('click', () => {
+      const url = searchInput.value;
+      iframeContainer.querySelector('iframe').src = url;
+    });
+  </script>
+</body>
+</html>
